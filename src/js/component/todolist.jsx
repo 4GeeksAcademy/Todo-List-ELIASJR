@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Modal from "./modal";
 
 const TodoList = () => {
     const [todoArray, setTodoArray] = useState([]);
@@ -6,6 +7,11 @@ const TodoList = () => {
     const pendingCount = todoArray.length - completeCount;
     const [formData, setFormData] = useState({ titulo: "", descripcion: "" });
     const [todoEditId, setTodoEditId] = useState(null);
+
+    const [modalEliminar, setModalELiminar] = useState({
+        isOpen: false,
+        todo: {},
+    })
 
     useEffect(() => {
         const data = window.localStorage.getItem('todoItems');
@@ -50,6 +56,7 @@ const TodoList = () => {
     const deleteTodo = (id) => {
         const newTodos = todoArray.filter(todo => todo.id !== id);
         setTodoArray(newTodos);
+        setModalELiminar({isOpen: false, todo: {}})
     };
 
     const toggleTodo = (id) => {
@@ -96,7 +103,7 @@ const TodoList = () => {
                             </p>
                             {todo.isComplete && <span className="badge bg-success">Completada</span>}
                             <button className="btn btn-warning mx-1" onClick={() => setTodoEdit(todo.id)}>Editar</button>
-                            <button className="btn btn-danger mx-1" onClick={() => deleteTodo(todo.id)}>Eliminar</button>
+                            <button className="btn btn-danger mx-1" onClick={() => setModalELiminar({isOpen: true, todo: todo})}>Eliminar</button>
                         </div>
                     )}
                     <div className="list-group-item">
@@ -104,6 +111,15 @@ const TodoList = () => {
                     </div>
                 </div>
             </div>
+            <Modal isOpen={modalEliminar.isOpen} onClose={() =>setModalELiminar({isOpen: false, todo: {}})}>
+                <div className="container text-center py-5">
+                    <h4>¿Deseas eliminar la tarea '{modalEliminar.todo.titulo}' ?</h4>
+                    <div className="w-100 d-flex justify-content-center mt-3">
+                        <div className="btn btn-danger mx-1" onClick={() => deleteTodo(modalEliminar.todo.id)}>sí, eliminar tarea</div>
+                        <div className="btn btn-success mx-1" onClick={() => setModalELiminar({isOpen: false, todo: {}})}>no, cancelar</div>
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 };

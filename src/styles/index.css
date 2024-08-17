@@ -1,12 +1,26 @@
+.modal-container {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
 
-/* 
+.modal-body {
+    background-color: white;
+    width: 50%;
+    min-width: 400px;
+    border-radius: 1rem;
+    position: relative;
+}
 
-    You can write your own styles here...
-    
-    
-    ...Or you can use the import command to include 
-    other sylesheets into your bunde as well, e.j:
-    
-    import 'relative/path/to/stylesheet.scss';
+.modal-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1rem;
+}
 
-*/
