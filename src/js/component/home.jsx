@@ -3,7 +3,9 @@ import TodoList from "./todolist";
 
 const Home = () => {
 	return (
+		<>
 		<TodoList />
+		</>
 	);
 };
 
